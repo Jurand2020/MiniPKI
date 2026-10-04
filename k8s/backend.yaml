@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minipki-backend
+  namespace: minipki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minipki-backend
+  template:
+    metadata:
+      labels:
+        app: minipki-backend
+    spec:
+      containers:
+        - name: backend
+          image: minipki-backend:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          envFrom:
+            - configMapRef:
+                name: minipki-config
+            - secretRef:
+                name: minipki-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: minipki-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: minipki
+spec:
+  selector:
+    app: minipki-backend
+  ports:
+    - port: 8080
+      targetPort: 8080

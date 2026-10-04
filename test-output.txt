@@ -1,0 +1,30 @@
+  Trwa określanie projektów do przywrócenia...
+  Wszystkie projekty są aktualne na potrzeby przywrócenia.
+  MiniPKI.Core -> C:\Repos\MiniPKI\src\backend\MiniPKI.Core\bin\Debug\net10.0\MiniPKI.Core.dll
+  MiniPKI.Infrastructure -> C:\Repos\MiniPKI\src\backend\MiniPKI.Infrastructure\bin\Debug\net10.0\MiniPKI.Infrastructure.dll
+  MiniPKI.Api -> C:\Repos\MiniPKI\src\backend\MiniPKI.Api\bin\Debug\net10.0\MiniPKI.Api.dll
+  MiniPKI.Tests -> C:\Repos\MiniPKI\src\backend\MiniPKI.Tests\bin\Debug\net10.0\MiniPKI.Tests.dll
+Przebieg testu dla: C:\Repos\MiniPKI\src\backend\MiniPKI.Tests\bin\Debug\net10.0\MiniPKI.Tests.dll (.NETCoreApp,Version=v10.0)
+Łączna liczba plików testowych dopasowanych do określonego wzorca: 1.
+[xUnit.net 00:00:03.33]     MiniPKI.Tests.Api.CertificateLifecycleTests.FullCertificateLifecycle [FAIL]
+  Niepowodzenie MiniPKI.Tests.Api.CertificateLifecycleTests.FullCertificateLifecycle [3 s]
+  Komunikat o błędzie:
+   System.Text.Json.JsonException : The JSON value could not be converted to System.String. Path: $.status | LineNumber: 0 | BytePositionInLine: 93.
+---- System.InvalidOperationException : Cannot get the value of a token type 'Number' as a string.
+  Ślad stosu:
+     at System.Text.Json.ThrowHelper.ReThrowWithPath(ReadStack& state, Utf8JsonReader& reader, Exception ex)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsync[TReadBufferState,TStream](TStream utf8Json, TReadBufferState bufferState, CancellationToken cancellationToken)
+   at System.Net.Http.Json.HttpContentJsonExtensions.ReadFromJsonAsyncCore[T](HttpContent content, JsonSerializerOptions options, CancellationToken cancellationToken)
+   at MiniPKI.Tests.Api.CertificateLifecycleTests.FullCertificateLifecycle() in C:\Repos\MiniPKI\src\backend\MiniPKI.Tests\Api\CertificateLifecycleTests.cs:line 82
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+   at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_ExpectedString(JsonTokenType tokenType)
+   at System.Text.Json.Utf8JsonReader.GetString()
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+
+Niepowodzenie! — niepowodzenie:     1, powodzenie:     0, pominięto:     0, łącznie:     1, czas trwania: 3 s - MiniPKI.Tests.dll (net10.0)

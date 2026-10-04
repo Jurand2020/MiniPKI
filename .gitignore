@@ -1,0 +1,20 @@
+## .NET
+**/bin/
+**/obj/
+*.user
+*.suo
+.vs/
+*.nupkg
+
+## Node / Frontend
+node_modules/
+src/frontend/dist/
+npm-debug.log*
+
+## PKI runtime data (never commit keys/certs)
+data/
+!data/.gitkeep
+
+## IDE
+.idea/
+*.swp

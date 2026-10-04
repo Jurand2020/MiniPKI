@@ -1,0 +1,29 @@
+# Git
+.git
+.gitignore
+
+# Runtime data
+data/
+
+# Reference repos
+reference/
+
+# Documentation
+doc/
+docs/
+
+# IDE files
+.vs/
+.idea/
+*.user
+*.suo
+
+# Build artifacts
+**/bin/
+**/obj/
+
+# Node modules
+**/node_modules/
+
+# Test results
+**/TestResults/

@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="MiniPKI.Api/MiniPKI.Api.csproj" />
+  <Project Path="MiniPKI.Core/MiniPKI.Core.csproj" />
+  <Project Path="MiniPKI.Infrastructure/MiniPKI.Infrastructure.csproj" />
+  <Project Path="MiniPKI.Tests/MiniPKI.Tests.csproj" />
+</Solution>

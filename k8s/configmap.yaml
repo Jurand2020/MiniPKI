@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minipki-config
+  namespace: minipki
+data:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  STORAGE__DATAPATH: "/data"
+  Pki__DefaultDomain: "company.local"
+  Pki__CrlBaseUrl: "http://pki.company.local/crl/"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minipki-secrets
+  namespace: minipki
+type: Opaque
+stringData:
+  Auth__PasswordHash: "pbkdf2-sha256:100000:c2FsdA==:hash-placeholder"
