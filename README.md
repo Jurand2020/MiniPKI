@@ -242,3 +242,64 @@ All AI-generated code was reviewed, tested, and verified by the developer.
 
 MIT License
 Refer LICENSE.md. 
+
+## Data Directory Structure
+
+All runtime state is stored under `./data/` (gitignored). The directory is created
+automatically on first run.
+
+```
+data/
+├── ca/                              # Certificate Authority
+│   ├── root.crt                     # Root CA certificate (PEM)
+│   ├── root.key                     # Root CA private key (PEM)
+│   ├── intermediate.crt             # Intermediate CA certificate (PEM)
+│   └── intermediate.key             # Intermediate CA private key (PEM)
+│
+├── certificates/                    # Active end-entity certificates
+│   ├── {serial}.crt                 # Certificate (PEM)
+│   ├── {serial}.key                 # Private key (PEM)
+│   └── {serial}.json                # Metadata (CN, SAN, algorithm, dates, etc.)
+│
+├── revoked/                         # Revoked certificates (moved from certificates/)
+│   ├── {serial}.crt
+│   ├── {serial}.key
+│   └── {serial}.json                # Metadata includes RevokedAt + RevocationReason
+│
+├── crl/                             # Certificate Revocation List
+│   └── ca.crl                       # Current CRL (PEM), regenerated on revocation
+│
+├── audit/                           # Append-only audit logs (JSON-lines)
+│   └── audit-{yyyy-MM-dd}.jsonl     # One file per day, each line is a JSON object
+│
+└── configuration/                   # Runtime PKI configuration
+    ├── pki.json                     # Persisted configuration (editable via API/UI)
+    └── password.hash                # Admin password hash (PBKDF2-HMAC-SHA256)
+```
+
+### File Formats
+
+| Type | Format | Description |
+|------|--------|-------------|
+| Certificates (`.crt`) | PEM | `-----BEGIN CERTIFICATE-----` |
+| Private keys (`.key`) | PEM | `-----BEGIN PRIVATE KEY-----` (PKCS#8) |
+| CRL (`.crl`) | PEM | `-----BEGIN X509 CRL-----` |
+| Metadata (`.json`) | JSON | Indented JSON with all certificate fields |
+| Audit logs (`.jsonl`) | JSON-lines | One JSON object per line, non-indented |
+| Configuration (`pki.json`) | JSON | Indented JSON with all PKI settings |
+| Password hash (`password.hash`) | Text | `pbkdf2-sha256:{iterations}:{base64-salt}:{base64-hash}` |
+
+### Backup
+
+To back up the entire PKI state, simply copy the `data/` directory:
+
+```bash
+# Stop the services first
+docker compose down
+
+# Create a backup
+cp -r data/ backup-$(date +%Y%m%d)/
+
+# Restart
+docker compose up -d
+```

@@ -13,6 +13,9 @@ public class AuthenticationMiddleware
         "/api/auth/login",
         "/api/auth/status",
         "/api/auth/set-password",
+        "/api/ca/chain",
+        "/api/ca/root",
+        "/api/ca/intermediate",
         "/api/crl/current",
         "/health"
     };

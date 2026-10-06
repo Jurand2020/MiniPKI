@@ -5,6 +5,7 @@ import ConfigIcon from '@mui/icons-material/Settings'
 import AuditIcon from '@mui/icons-material/History'
 import LogoutIcon from '@mui/icons-material/Logout'
 import AccountCircle from '@mui/icons-material/AccountCircle'
+import DownloadIcon from '@mui/icons-material/Download'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { ReactNode, useState } from 'react'
 import api from '../api/client'
@@ -24,6 +25,20 @@ export default function Layout({ children, onLogout }: { children: ReactNode; on
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const [changePasswordOpen, setChangePasswordOpen] = useState(false)
 
+  const downloadCaChain = async () => {
+    try {
+      const res = await api.get('/ca/chain', { responseType: 'blob' })
+      const url = window.URL.createObjectURL(res.data)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'ca-chain.pem'
+      a.click()
+      window.URL.revokeObjectURL(url)
+    } catch {
+      // ignore download errors
+    }
+  }
+
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar position="fixed" sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}>
@@ -31,6 +46,9 @@ export default function Layout({ children, onLogout }: { children: ReactNode; on
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             MiniPKI Certificate Authority
           </Typography>
+          <Button color="inherit" startIcon={<DownloadIcon />} onClick={() => downloadCaChain()}>
+            CA Chain
+          </Button>
           <IconButton color="inherit" onClick={e => setAnchorEl(e.currentTarget)}>
             <AccountCircle />
           </IconButton>

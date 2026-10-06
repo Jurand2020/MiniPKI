@@ -11,7 +11,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
       - STORAGE__DATAPATH=/data
-      - Auth__PasswordHash=pbkdf2-sha256:100000:8qXwUP3qvCIKhNZXKo0mGw==:poR8hg==
+      - Auth__PasswordHash=pbkdf2-sha256:100000:ClqEblBhH4AISgW25pIdxg==:UP5U7Xl3DITBqbxC5wbyq/BOSZ7br
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
